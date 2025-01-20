@@ -23,3 +23,24 @@ struct WeatherMetricView: View {
         }
     }
 }
+
+struct WeatherMetricView_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            WeatherMetricView(label: "Humidity", value: "50%")
+                .previewLayout(.sizeThatFits)
+                .padding()
+                .previewDisplayName("Humidity")
+
+            WeatherMetricView(label: "UV Index", value: "5.0")
+                .previewLayout(.sizeThatFits)
+                .padding()
+                .previewDisplayName("UV Index")
+
+            WeatherMetricView(label: "Wind Speed", value: "10 km/h")
+                .previewLayout(.sizeThatFits)
+                .padding()
+                .previewDisplayName("Wind Speed")
+        }
+    }
+}
