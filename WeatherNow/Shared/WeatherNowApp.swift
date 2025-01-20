@@ -19,13 +19,14 @@ struct WeatherNowApp: App {
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            print("Failed to create ModelContainer: \(error.localizedDescription)")
+            return try! ModelContainer(for: schema, configurations: [])  // Provide a fallback if needed
         }
     }()
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
         .modelContainer(sharedModelContainer)
     }
