@@ -24,7 +24,7 @@ struct SearchResultCard: View {
 
                     HStack(alignment: .top, spacing: 0) {
                         Text("\(Int(weather.current.tempC))")
-                            .font(.system(size: 80, weight: .bold))
+                            .font(.system(size: 60, weight: .bold))
                             .foregroundColor(.black)
 
                         Text("˚")
@@ -52,5 +52,7 @@ struct SearchResultCard: View {
             .cornerRadius(15)
             .padding(.horizontal, 20)
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("SearchResultCard")
     }
 }
