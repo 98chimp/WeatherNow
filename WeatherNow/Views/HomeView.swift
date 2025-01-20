@@ -25,7 +25,7 @@ struct HomeView: View {
                     })
                     .accessibilityIdentifier("SearchField")
                     .padding(12)
-                    .background(Color(.systemGray6))
+                    .background(Color.customGray)
                     .cornerRadius(15)
                     .overlay(
                         HStack {
@@ -91,7 +91,7 @@ struct HomeView: View {
 
                         HStack(spacing: 5) {
                             Text(viewModel.weather?.location.name ?? "City Name")
-                                .font(.system(size: 32, weight: .bold))
+                                .font(.system(size: 30, weight: .bold))
                                 .foregroundColor(.black)
                                 .accessibilityIdentifier("CityNameLabel")
 
@@ -102,7 +102,7 @@ struct HomeView: View {
 
                         HStack(alignment: .top, spacing: 0) {
                             Text(viewModel.preferredTemperature)
-                                .font(.system(size: 80, weight: .bold))
+                                .font(.system(size: 70, weight: .bold))
                                 .foregroundColor(.black)
                                 .accessibilityIdentifier("TemperatureLabel")
 
@@ -120,7 +120,7 @@ struct HomeView: View {
                             WeatherMetricView(label: "Feels Like", value: viewModel.preferredFeelsLikeTemperature)
                         }
                         .padding()
-                        .background(Color(.systemGray6))
+                        .background(Color.customGray)
                         .cornerRadius(16)
                         .padding(.horizontal, 20)
                     }
