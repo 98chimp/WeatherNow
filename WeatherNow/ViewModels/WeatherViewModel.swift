@@ -16,49 +16,59 @@ class WeatherViewModel: ObservableObject {
 
     private let weatherService: WeatherAPIServiceProtocol
     private let userDefaultsKey = "selectedCity"
+    private let locale: Locale
 
-    init(weatherService: WeatherAPIServiceProtocol = WeatherAPIService()) {
+    init(weatherService: WeatherAPIServiceProtocol = WeatherAPIService(), locale: Locale = .current) {
         self.weatherService = weatherService
-        loadSavedCity()
+        self.locale = locale
     }
 
-    /// Fetches weather for the given city asynchronously
     func getWeather(for city: String) async {
         do {
             let response = try await weatherService.fetchWeather(for: city)
             DispatchQueue.main.async {
                 self.weather = response
                 self.errorMessage = nil
-                self.saveSelectedCity(city)
             }
         } catch {
             DispatchQueue.main.async {
                 self.weather = nil
-                self.errorMessage = "Failed to fetch weather for \(city)"
+                self.errorMessage = "Failed to fetch weather"
             }
         }
     }
 
-    /// Saves the selected city to UserDefaults
     func saveSelectedCity(_ city: String) {
         UserDefaults.standard.set(city, forKey: userDefaultsKey)
-        savedCity = city
     }
 
-    /// Loads the saved city from UserDefaults
     func loadSavedCity() {
         if let city = UserDefaults.standard.string(forKey: userDefaultsKey) {
             savedCity = city
-            Task {
-                await getWeather(for: city)
-            }
         }
     }
 
-    /// Clears the saved city from UserDefaults
     func clearSavedCity() {
         UserDefaults.standard.removeObject(forKey: userDefaultsKey)
         savedCity = nil
-        weather = nil
+    }
+
+    // Function to determine temperature unit
+    var preferredTemperature: String {
+        guard let weather = weather else { return "--" }
+        if locale.measurementSystem == .us {
+            return "\(Int(weather.current.tempF))"
+        } else {
+            return "\(Int(weather.current.tempC))"
+        }
+    }
+
+    var preferredFeelsLikeTemperature: String {
+        guard let weather = weather else { return "--" }
+        if locale.measurementSystem == .us {
+            return "\(Int(weather.current.feelslikeF))"
+        } else {
+            return "\(Int(weather.current.feelslikeC))"
+        }
     }
 }

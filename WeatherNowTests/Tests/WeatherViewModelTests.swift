@@ -128,4 +128,30 @@ class WeatherViewModelTests: XCTestCase {
             XCTAssertEqual(newViewModel.savedCity, "Berlin")
         }
     }
+
+    @MainActor func testTemperatureUnitSwitching() {
+        let mockWeather = WeatherResponse(
+            location: Location(name: "New York"),
+            current: CurrentWeather(
+                tempC: 20.0,
+                tempF: 68.0,
+                condition: Condition(text: "Clear", icon: "//cdn.weatherapi.com/weather/64x64/day/113.png"),
+                humidity: 50,
+                uv: 5.0,
+                feelslikeC: 22.0,
+                feelslikeF: 71.6,
+                isDay: 1
+            )
+        )
+
+        let viewModelUS = WeatherViewModel(locale: Locale(identifier: "en_US"))
+        viewModelUS.weather = mockWeather
+        XCTAssertEqual(viewModelUS.preferredTemperature, "68")
+        XCTAssertEqual(viewModelUS.preferredFeelsLikeTemperature, "71")
+
+        let viewModelUK = WeatherViewModel(locale: Locale(identifier: "en_GB"))
+        viewModelUK.weather = mockWeather
+        XCTAssertEqual(viewModelUK.preferredTemperature, "20")
+        XCTAssertEqual(viewModelUK.preferredFeelsLikeTemperature, "22")
+    }
 }

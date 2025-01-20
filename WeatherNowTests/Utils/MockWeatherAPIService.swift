@@ -23,10 +23,12 @@ class MockWeatherAPIService: WeatherAPIServiceProtocol {
             location: Location(name: city),
             current: CurrentWeather(
                 tempC: 25.0,
+                tempF: 99.0,
                 condition: Condition(text: "Sunny", icon: "//cdn.weatherapi.com/weather/64x64/day/113.png"),
                 humidity: 40,
                 uv: 6.0,
                 feelslikeC: 27.0,
+                feelslikeF: 102.0,
                 isDay: 1
             )
         )

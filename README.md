@@ -6,7 +6,6 @@ WeatherNow is a SwiftUI-based iOS application that provides weather forecasts fo
 
 ### 🛠️ **Project Setup**
 - Created a SwiftUI-based iOS project using `MVVM` architecture.
-- Integrated `SwiftData` for persistence.
 - Configured API integration using `WeatherAPI.com`.
 - Implemented environment setup for production and UI testing.
 
@@ -41,7 +40,7 @@ WeatherNow is a SwiftUI-based iOS application that provides weather forecasts fo
 - Successfully handled the `is_day` field to dynamically display day/night icons.
 
 ### 🧪 **Unit Testing**
-Achieved **>80% code coverage** with comprehensive unit tests for:
+Achieved **>90% code coverage** with comprehensive unit tests for:
 1. **Weather Model Decoding**
    - Successfully decoded valid JSON responses.
    - Handled missing fields and unexpected JSON structures.
@@ -64,7 +63,6 @@ Achieved **>80% code coverage** with comprehensive unit tests for:
   - Error message visibility on invalid search.
   - Navigation to the weather detail screen.
 - Used `accessibilityIdentifiers` to locate and assert UI elements reliably.
-- Overcame challenges with mock API service setup using `AppDelegate`.
 
 ### 🛠️ **Mocking and Test Setup**
 - Integrated a mock API service to bypass real API calls during testing.
@@ -83,6 +81,38 @@ Achieved **>80% code coverage** with comprehensive unit tests for:
 - Improve network request caching for better performance.
 - Add localization support for multiple languages.
 
+
+## New Features
+
+### Temperature Unit Conversion
+
+The app now supports automatic temperature unit conversion based on the device's locale settings. It dynamically displays temperatures in:
+
+- **Celsius (°C)** if the device uses the metric system (e.g., Canada, Europe, Asia).
+- **Fahrenheit (°F)** if the device uses the imperial system (e.g., United States).
+
+#### How It Works:
+- The app detects the device's locale using the `Locale.current.measurementSystem` API (introduced in iOS 16).
+- Based on the detected locale, it displays the appropriate temperature format in the UI.
+- The app fetches both Celsius and Fahrenheit values from the API response and selects the appropriate one dynamically.
+
+#### Example Behavior:
+| Device Locale         | Displayed Temperature |
+|----------------------|----------------------|
+| `en_US` (Imperial)    | 68°F                  |
+| `en_GB` (Metric)      | 20°C                  |
+
+#### How to Test:
+
+1. **Unit Tests**
+    - Run `WeatherNowTests` to verify correct temperature unit selection.
+    - Check test cases for both `en_US` and `fr_FR` locales to ensure proper conversion.
+
+2. **Manual Testing**
+    - Change your device's region to the US (Settings > General > Language & Region).
+    - Launch the app and verify temperature is displayed in Fahrenheit (°F).
+    - Switch to a European region and check for Celsius (°C).
+
 ---
 
 ## How to Run the Project
@@ -95,5 +125,9 @@ Achieved **>80% code coverage** with comprehensive unit tests for:
 
 2. Open the project in Xcode:
    ```bash
-   open WeatherNow.xcworkspace
+   open WeatherNow.xcodeproj
    ```
+
+## License
+
+This project is licensed under the MIT License.

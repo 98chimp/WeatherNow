@@ -101,7 +101,7 @@ struct HomeView: View {
                         }
 
                         HStack(alignment: .top, spacing: 0) {
-                            Text("\(Int(viewModel.weather?.current.tempC ?? 0))")
+                            Text(viewModel.preferredTemperature)
                                 .font(.system(size: 80, weight: .bold))
                                 .foregroundColor(.black)
                                 .accessibilityIdentifier("TemperatureLabel")
@@ -117,7 +117,7 @@ struct HomeView: View {
                             Spacer()
                             WeatherMetricView(label: "UV", value: "\(Int(viewModel.weather?.current.uv ?? 0))")
                             Spacer()
-                            WeatherMetricView(label: "Feels Like", value: "\(Int(viewModel.weather?.current.feelslikeC ?? 0))°")
+                            WeatherMetricView(label: "Feels Like", value: viewModel.preferredFeelsLikeTemperature)
                         }
                         .padding()
                         .background(Color(.systemGray6))
@@ -168,10 +168,12 @@ struct HomeView_Previews: PreviewProvider {
                 location: Location(name: "San Francisco"),
                 current: CurrentWeather(
                     tempC: 22.5,
+                    tempF: 58.0,
                     condition: Condition(text: "Sunny", icon: "//cdn.weatherapi.com/weather/64x64/day/113.png"),
                     humidity: 50,
                     uv: 5.0,
                     feelslikeC: 24.0,
+                    feelslikeF: 98.0,
                     isDay: 1
                 )
             )
