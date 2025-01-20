@@ -92,8 +92,7 @@ Achieved **>80% code coverage** with comprehensive unit tests for:
    git clone https://github.com/yourrepo/WeatherNow.git
    cd WeatherNow
 ```
-
 2. Open the project in Xcode
-```bash
-open WeatherNow.xcworkspace
-```
+    ```bash
+    open WeatherNow.xcworkspace
+    ```
