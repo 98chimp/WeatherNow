@@ -14,9 +14,6 @@ struct HomeView: View {
 
     var body: some View {
         ZStack {
-//            Color.white
-//                .ignoresSafeArea(.all)
-
             VStack {
                 // Search Bar
                 HStack {
@@ -26,6 +23,7 @@ struct HomeView: View {
                             showSearchResults = true
                         }
                     })
+                    .accessibilityIdentifier("SearchField")
                     .padding(12)
                     .background(Color(.systemGray6))
                     .cornerRadius(15)
@@ -38,6 +36,20 @@ struct HomeView: View {
                         }
                     )
                     .padding(.horizontal, 20)
+                    .accessibilityIdentifier("SearchField")
+                }
+
+                if let errorMessage = viewModel.errorMessage {
+                    Text(errorMessage)
+                        .font(.body)
+                        .foregroundColor(.red)
+                        .accessibilityIdentifier("ErrorMessageLabel")
+                        .padding(.top, 10)
+                        .transition(.opacity)
+                        .onAppear {
+                            triggerErrorDismissal()
+                            city = ""
+                        }
                 }
 
                 if showSearchResults {
@@ -81,6 +93,7 @@ struct HomeView: View {
                             Text(viewModel.weather?.location.name ?? "City Name")
                                 .font(.system(size: 32, weight: .bold))
                                 .foregroundColor(.black)
+                                .accessibilityIdentifier("CityNameLabel")
 
                             Image(systemName: "location.fill")
                                 .foregroundColor(.black)
@@ -91,6 +104,7 @@ struct HomeView: View {
                             Text("\(Int(viewModel.weather?.current.tempC ?? 0))")
                                 .font(.system(size: 80, weight: .bold))
                                 .foregroundColor(.black)
+                                .accessibilityIdentifier("TemperatureLabel")
 
                             Text("˚")
                                 .font(.system(size: 40, weight: .bold))
@@ -111,6 +125,7 @@ struct HomeView: View {
                         .padding(.horizontal, 20)
                     }
                     .padding(.top, 30)
+                    .accessibilityIdentifier("WeatherInfoSection")
                 }
 
                 Spacer()
@@ -119,6 +134,14 @@ struct HomeView: View {
             .padding(.bottom, 50)
         }
         .preferredColorScheme(.light)
+    }
+
+    private func triggerErrorDismissal() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation {
+                viewModel.errorMessage = nil
+            }
+        }
     }
 
     func getWeatherIconUrl() -> String {
