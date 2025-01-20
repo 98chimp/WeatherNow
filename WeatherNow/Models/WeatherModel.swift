@@ -6,16 +6,6 @@
 //
 
 import Foundation
-import SwiftData
-
-@Model
-final class Item {
-    var timestamp: Date
-    
-    init(timestamp: Date) {
-        self.timestamp = timestamp
-    }
-}
 
 struct WeatherResponse: Codable {
     let location: Location
@@ -27,11 +17,22 @@ struct Location: Codable {
 }
 
 struct CurrentWeather: Codable {
-    let temp_c: Double
+
+    enum CodingKeys: String, CodingKey {
+        case tempC = "temp_c"
+        case condition
+        case humidity
+        case uv
+        case feelslikeC = "feelsLike_c"
+        case isDay = "is_day"
+    }
+
+    let tempC: Double
     let condition: Condition
     let humidity: Int
     let uv: Double
-    let feelslike_c: Double
+    let feelslikeC: Double
+    let isDay: Int  // Day or night indicator (1 = day, 0 = night)
 }
 
 struct Condition: Codable {
