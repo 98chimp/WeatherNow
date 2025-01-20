@@ -48,11 +48,38 @@ struct SearchResultCard: View {
                 }
             }
             .padding(.vertical, 12)
-            .background(Color(.systemGray6))
+            .background(Color.customGray)
             .cornerRadius(15)
             .padding(.horizontal, 20)
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("SearchResultCard")
+    }
+}
+
+struct SearchResultCard_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchResultCard(
+            weather: WeatherResponse(
+                location: Location(name: "San Francisco"),
+                current: CurrentWeather(
+                    tempC: 22.5,
+                    tempF: 72.5,
+                    condition: Condition(
+                        text: "Sunny",
+                        icon: "//cdn.weatherapi.com/weather/64x64/day/113.png"
+                    ),
+                    humidity: 50,
+                    uv: 5.0,
+                    feelslikeC: 24.0,
+                    feelslikeF: 75.2,
+                    isDay: 1
+                )
+            ),
+            onSelect: {
+                print("Search result tapped")
+            }
+        )
+        .previewLayout(.sizeThatFits)
     }
 }
