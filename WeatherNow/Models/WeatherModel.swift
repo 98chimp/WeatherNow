@@ -17,13 +17,12 @@ struct Location: Codable {
 }
 
 struct CurrentWeather: Codable {
-
     enum CodingKeys: String, CodingKey {
         case tempC = "temp_c"
         case condition
         case humidity
         case uv
-        case feelslikeC = "feelsLike_c"
+        case feelslikeC = "feelslike_c"
         case isDay = "is_day"
     }
 
